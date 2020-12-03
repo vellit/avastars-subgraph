@@ -1,0 +1,62 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Avastar
+    network: mainnet
+    source:
+      address: "0xf3e778f839934fc819cfa1040aabacecba01e049"
+      abi: Avastar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - AttributionSet
+        - ContractPaused
+        - ContractUnpaused
+        - ContractUpgrade
+        - MetadataContractAddressSet
+        - NewPrime
+        - NewReplicant
+        - NewTrait
+        - TraitAccessApproved
+        - TraitArtExtended
+        - TraitsUsed
+        - Transfer
+      abis:
+        - name: Avastar
+          file: ./abis/Avastar.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: AttributionSet(uint8,string,string)
+          handler: handleAttributionSet
+        - event: ContractPaused()
+          handler: handleContractPaused
+        - event: ContractUnpaused()
+          handler: handleContractUnpaused
+        - event: ContractUpgrade(address)
+          handler: handleContractUpgrade
+        - event: MetadataContractAddressSet(address)
+          handler: handleMetadataContractAddressSet
+        - event: NewPrime(uint256,uint256,uint8,uint8,uint8,uint256)
+          handler: handleNewPrime
+        - event: NewReplicant(uint256,uint256,uint8,uint8,uint256)
+          handler: handleNewReplicant
+        - event: NewTrait(uint256,uint8,uint8,uint8,uint8,string)
+          handler: handleNewTrait
+        - event: TraitAccessApproved(indexed address,uint256[])
+          handler: handleTraitAccessApproved
+        - event: TraitArtExtended(uint256)
+          handler: handleTraitArtExtended
+        - event: TraitsUsed(indexed address,uint256,bool[12])
+          handler: handleTraitsUsed
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
